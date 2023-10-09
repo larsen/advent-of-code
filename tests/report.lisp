@@ -32,7 +32,5 @@
                                         v)))))
   report)
 
-;; ●◐
-
 (defun run-aoc-tests ()
   (parachute:test :advent-of-code/test :report 'aoc-report))

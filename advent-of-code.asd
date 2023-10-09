@@ -50,6 +50,11 @@
                (:module "2018"
                 :components ((:file "day1")
                              (:file "day2")
+                             (:file "day3")))
+               (:module "2019"
+                :components ((:file "intcode")
+                             (:file "day1")
+                             (:file "day2")
                              (:file "day3"))))
   :in-order-to ((test-op (test-op #:advent-of-code/test))))
 
@@ -62,5 +67,6 @@
                              (:file "2015")
                              (:file "2016")
                              (:file "2017")
-                             (:file "2018"))))
+                             (:file "2018")
+                             (:file "2019"))))
   :perform (test-op (op _) (symbol-call :advent-of-code/test :run-aoc-tests)))
