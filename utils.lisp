@@ -1,5 +1,13 @@
 (in-package #:advent-of-code)
 
+(defun read-input-file (filename)
+  (uiop:read-file-string
+   (asdf:system-relative-pathname 'advent-of-code filename)))
+
+(defun read-input-file-as-lines (filename)
+  (uiop:read-file-lines
+   (asdf:system-relative-pathname 'advent-of-code filename)))
+
 (let ((last-returned-value))
   (defun flip-flop (value1 value2)
     (unless last-returned-value

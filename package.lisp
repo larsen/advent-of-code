@@ -25,4 +25,15 @@
            aoc2015/day19/solution1 aoc2015/day19/solution2
            aoc2015/day20/solution1 aoc2015/day20/solution2
            aoc2015/day21/solution1 aoc2015/day21/solution2
+
+           aoc2016/day1/solution1 aoc2016/day1/solution2
+           aoc2016/day2/solution1 aoc2016/day2/solution2
+           aoc2016/day3/solution1 aoc2016/day3/solution2
+           aoc2016/day4/solution1 aoc2016/day4/solution2
+           aoc2016/day5/solution1 aoc2016/day5/solution2
+           aoc2016/day6/solution1 aoc2016/day6/solution2
+           aoc2016/day7/solution1 aoc2016/day7/solution2
+           aoc2016/day8/solution1 aoc2016/day8/solution2
+           decompress
+           aoc2016/day9/solution1 aoc2016/day9/solution2
            ))
