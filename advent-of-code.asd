@@ -39,7 +39,14 @@
                              (:file "day6")
                              (:file "day7")
                              (:file "day8")
-                             (:file "day9"))))
+                             (:file "day9")))
+               (:module "2017"
+                :components ((:file "day1")
+                             (:file "day2")
+                             (:file "day3")
+                             (:file "day4")
+                             (:file "day5")
+                             (:file "day6"))))
   :in-order-to ((test-op (test-op #:advent-of-code/test))))
 
 (asdf:defsystem #:advent-of-code/test
@@ -50,5 +57,5 @@
                              (:file "report")
                              (:file "2015")
                              (:file "2016")
-                             )))
+                             (:file "2017"))))
   :perform (test-op (op _) (symbol-call :advent-of-code/test :run-aoc-tests)))
