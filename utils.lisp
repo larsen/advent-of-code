@@ -56,3 +56,10 @@ START to END (excluded) have been replaced by SUBLST."
         if (or (< idx start)
                (>= idx end))
           collect elem))
+
+(defun read-csv-line (filename)
+  (mapcar #'parse-integer
+          (split "," (uiop:read-file-string filename))))
+
+(defun triangular (n)
+  (* 1/2 n (+ n 1)))

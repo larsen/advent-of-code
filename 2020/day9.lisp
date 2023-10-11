@@ -2,7 +2,8 @@
 
 (defun read-numbers ()
   (mapcar #'parse-integer (uiop:read-file-lines
-                           (asdf:system-relative-pathname 'advent-of-code "inputs/2020/day9"))))
+                           (asdf:system-relative-pathname
+                            'advent-of-code "inputs/2020/day9"))))
 
 (defun checksum (n previous)
   (let (res)
