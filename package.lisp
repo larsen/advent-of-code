@@ -50,4 +50,21 @@
 
            aoc2019/day1/solution1 aoc2019/day1/solution2
            aoc2019/day2/solution1 aoc2019/day2/solution2
-           aoc2019/day3/solution1 aoc2019/day3/solution2))
+           aoc2019/day3/solution1 aoc2019/day3/solution2
+
+           aoc2020/day1/solution1 aoc2020/day1/solution2
+           aoc2020/day2/solution1 aoc2020/day2/solution2
+           aoc2020/day3/solution1 aoc2020/day3/solution2
+           aoc2020/day4/solution1 aoc2020/day4/solution2
+           aoc2020/day5/solution1 aoc2020/day5/solution2
+           aoc2020/day6/solution1 aoc2020/day6/solution2
+           aoc2020/day7/solution1 aoc2020/day7/solution2
+           aoc2020/day8/solution1 aoc2020/day8/solution2
+           aoc2020/day9/solution1 aoc2020/day9/solution2
+           aoc2020/day10/solution1 aoc2020/day10/solution2
+           aoc2020/day11/solution1 aoc2020/day11/solution2
+           aoc2020/day12/solution1 aoc2020/day12/solution2
+           aoc2020/day13/solution1 aoc2020/day13/solution2
+           aoc2020/day14/solution1 aoc2020/day14/solution2
+           aoc2020/day15/solution1 aoc2020/day15/solution2
+           aoc2020/day16/solution1))

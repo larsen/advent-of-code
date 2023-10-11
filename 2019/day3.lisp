@@ -3,7 +3,7 @@
 (defun read-wires ()
   (loop for line in (uiop:read-file-lines
                      (asdf:system-relative-pathname 'advent-of-code
-                                                    "inputs/2019/day3-test3"))
+                                                    "inputs/2019/day3"))
         collect (split-sequence #\, line)))
 
 (defun wire->segments (wire)

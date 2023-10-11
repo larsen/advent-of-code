@@ -5,13 +5,17 @@
 
 (defun print-table (lst &optional (stream *standard-output*))
   "Prints a list of lists as a table"
+  (format stream "~&~9a ~{~3a~}"
+          ""
+          (alexandria:iota 25 :start 1))
   (mapcar (lambda (l)
-         (format stream "~&~{~2a~}" l))
-       lst))
+            (format stream "~&~9a ~{~3a~}"
+                    (first l)
+                    (rest l)))
+          lst))
 
 (defmethod summarize ((report aoc-report))
   (let ((test-hierarchy (make-hash-table)))
-    ;; Transform the results into a tree
     (loop for r in (results-with-status :passed report)
           for expr = (expression r)
           when (typep r 'test-result)
@@ -27,8 +31,8 @@
                                        (mapcar
                                         (lambda (lst)
                                           (if (> (length lst) 1)
-                                              "●"
-                                              "◐"))
+                                              "**"
+                                              "*"))
                                         v)))))
   report)
 
