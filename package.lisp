@@ -3,7 +3,10 @@
         #:cl-ppcre
         #:md5
         #:org.tfeb.hax.memoize
-        #:split-sequence)
+        #:split-sequence
+        #:sketch)
+  (:shadowing-import-from #:alexandria
+                          #:rotate)
   (:export aoc2015/day1/solution1 aoc2015/day1/solution2
            aoc2015/day2/solution1 aoc2015/day2/solution2
            aoc2015/day3/solution1 aoc2015/day3/solution2
@@ -84,4 +87,21 @@
            aoc2021/day12/solution1-iterative
            aoc2021/day13/solution1 aoc2021/day13/solution2
            aoc2021/day14/solution1 aoc2021/day14/solution2
-           aoc2021/day15/solution1 aoc2021/day15/solution2))
+           aoc2021/day15/solution1 aoc2021/day15/solution2
+
+           aoc2022/day1/solution1 aoc2022/day1/solution2
+           aoc2022/day2/solution1 aoc2022/day2/solution2
+           aoc2022/day3/solution1 aoc2022/day3/solution2
+           aoc2022/day4/solution1 aoc2022/day4/solution2
+           aoc2022/day5/solution1 aoc2022/day5/solution2
+           aoc2022/day6/solution1 aoc2022/day6/solution2
+           aoc2022/day7/solution1 aoc2022/day7/solution2
+           aoc2022/day8/solution1 aoc2022/day8/solution2
+           aoc2022/day9/solution1 aoc2022/day9/solution2
+           aoc2022/day10/solution1 aoc2022/day10/solution2
+           aoc2022/day11/solution1 aoc2022/day11/solution2
+           aoc2022/day12/solution1 aoc2022/day12/solution2
+           aoc2022/day13/solution1 aoc2022/day13/solution2
+           aoc2022/day14/solution1 aoc2022/day14/solution2
+           aoc2022/day15/solution1 aoc2022/day15/solution2
+           aoc2022/day16/solution1))

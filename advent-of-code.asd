@@ -5,7 +5,8 @@
   :version "0.0.1"
   :serial t
   :depends-on (#:alexandria #:cl-ppcre #:md5 #:memoize #:split-sequence
-                            #:jonathan #:magicl)
+                            #:jonathan #:magicl
+                            #:sketch)
   :components ((:file "package")
                (:file "utils")
                (:module "2015"
@@ -88,7 +89,24 @@
                              (:file "day12")
                              (:file "day13")
                              (:file "day14")
-                             (:file "day15"))))
+                             (:file "day15")))
+               (:module "2022"
+                :components ((:file "day1")
+                             (:file "day2")
+                             (:file "day3")
+                             (:file "day4")
+                             (:file "day5")
+                             (:file "day6")
+                             (:file "day7")
+                             (:file "day8")
+                             (:file "day9")
+                             (:file "day10")
+                             (:file "day11")
+                             (:file "day12")
+                             (:file "day13")
+                             (:file "day14")
+                             (:file "day15")
+                             (:file "day16"))))
   :in-order-to ((test-op (test-op #:advent-of-code/test))))
 
 (asdf:defsystem #:advent-of-code/test
@@ -103,5 +121,6 @@
                              (:file "2018")
                              (:file "2019")
                              (:file "2020")
-                             (:file "2021"))))
+                             (:file "2021")
+                             (:file "2022"))))
   :perform (test-op (op _) (symbol-call :advent-of-code/test :run-aoc-tests)))

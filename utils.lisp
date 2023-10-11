@@ -63,3 +63,29 @@ START to END (excluded) have been replaced by SUBLST."
 
 (defun triangular (n)
   (* 1/2 n (+ n 1)))
+
+(defparameter infinity most-positive-fixnum)
+
+(defun sum (lst)
+  (reduce #'+ lst))
+
+(defun transpose (lst)
+  (apply #'mapcar #'list lst))
+
+
+;; Sequences
+
+(defclass wrapped-sequence ()
+  ((sequence :initarg :sequence :accessor seq)
+   (index :initform -1 :accessor index)))
+
+(defgeneric reset (s))
+(defmethod reset ((s wrapped-sequence))
+  (setf (index s) -1))
+
+(defgeneric next (s))
+(defmethod next ((s wrapped-sequence))
+  (when (= (index s) (- (length (seq s)) 1))
+    (reset s))
+  (incf (index s))
+  (nth (index s) (seq s)))
