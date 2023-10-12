@@ -14,26 +14,49 @@
                     (rest l)))
           lst))
 
+
+(defun all-results (test)
+  (loop for r across (results test)
+        collect r))
+
+(defun filter-results (results typ)
+  (remove-if-not (lambda (a) (typep a typ)) results))
+
+(defun has-parent (test)
+  (null (parent (expression test))))
+
+(defun aoc-daily-tests-recap (tests)
+  (loop for test in tests
+        collect (coerce (loop for inner-test across test
+                              collect (cond
+                                        ((eql :passed (status inner-test)) #\*)
+                                        ((eql :failed (status inner-test)) #\f)))
+                        'string)))
+
 (defmethod summarize ((report aoc-report))
+  ;; For AOC tests, we have a three-level hierarchy:
+  ;; - The top level test marks the year, e.g. aoc2019
+  ;;   This level has no parent
+  ;;   - under that, we have individual groups for each day, e.g. aoc2019/day1
+  ;;     their parent is the top level test
+  ;;     - under that, there are individual test for each part of the day,
+  ;;       including .../solution1 and .../solution2 that mark the two daily problems
   (let ((test-hierarchy (make-hash-table)))
-    (loop for r in (results-with-status :passed report)
-          for expr = (expression r)
-          when (typep r 'test-result)
-            do (if (null (parent expr))
-                   (setf (gethash (name expr) test-hierarchy)
-                         '())
-                   (push (results r)
-                         (gethash (name (parent expr))
-                                  test-hierarchy))))
+    ;; First we set up the keys...
+    (dolist (parent-test (remove-if-not #'has-parent
+                                        (filter-results (all-results report)
+                                                        'test-result)))
+      (setf (gethash (name (expression parent-test)) test-hierarchy) '()))
+    ;; ... then their values
+    (dolist (test (remove-if #'has-parent
+                             (filter-results (all-results report)
+                                             'test-result)))
+      (push (results test) (gethash (name (parent (expression test))) test-hierarchy)))
+    ;; Now pretty-printing the structure
     (print-table (loop for k being the hash-keys of test-hierarchy
                        for v being the hash-values of test-hierarchy
                        collect (append (list k)
-                                       (mapcar
-                                        (lambda (lst)
-                                          (if (> (length lst) 1)
-                                              "**"
-                                              "*"))
-                                        v)))))
+                                       (aoc-daily-tests-recap v)))))
   report)
 
 (defun run-aoc-tests ()
