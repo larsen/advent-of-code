@@ -18,14 +18,14 @@
                  (setf (gethash city2 adjacency-graph) city2-distances)))
           finally (return adjacency-graph))))
 
-(defun distance (city1 city2 adjacency-graph)
+(defun cities-distance (city1 city2 adjacency-graph)
   (gethash city2 (gethash city1 adjacency-graph)))
 
 (defun path-length (path adjacency-graph)
   (cond
     ((= 0 (length path)) (error "Malformed path: ~a" path))
     ((= 1 (length path)) 0)
-    (t (+ (distance (car path) (cadr path) adjacency-graph)
+    (t (+ (cities-distance (car path) (cadr path) adjacency-graph)
           (path-length (cdr path) adjacency-graph)))))
 
 (defun search-shortest-path (graph)
