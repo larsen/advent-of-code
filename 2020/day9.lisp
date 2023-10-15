@@ -22,7 +22,7 @@
 
 (defun aoc2020/day9/solution2 ()
   (let* ((lst (read-numbers))
-         (previous-result (day9/solution1))
+         (previous-result (aoc2020/day9/solution1))
          (solution
            (loop for n from 2 below (- (length lst) 2)
                  append (loop for idx from 0 below (- (length lst) n)
