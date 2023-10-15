@@ -1,6 +1,6 @@
 (in-package #:advent-of-code)
 
-(defun read-program ()
+(defun aoc2022/day10/read-program ()
   (mapcar (lambda (l)
             (split " " l))
           (uiop:read-file-lines
@@ -60,13 +60,13 @@
                    (parse-integer param))))
 
 (defun aoc2022/day10/solution1 ()
-  (let ((device (make-elves-device :program (read-program))))
+  (let ((device (make-elves-device :program (aoc2022/day10/read-program))))
     (run-program-on-elves-device device)
     (sum (loop for (c . r) in (elves-device-samplings device)
                collect (* c r)))))
 
 (defun aoc2022/day10/solution2 ()
-  (let ((device (make-elves-device :program (read-program))))
+  (let ((device (make-elves-device :program (aoc2022/day10/read-program))))
     (run-program-on-elves-device device)
     ;; (render-display device)
     "RGZEHURK"))
