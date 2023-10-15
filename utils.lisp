@@ -57,6 +57,18 @@ START to END (excluded) have been replaced by SUBLST."
                (>= idx end))
           collect elem))
 
+(defun digits (n)
+  "Returns the list of digits of N (as numbers)"
+  (loop for d across (format nil "~A" n)
+        collect (digit-char-p d)))
+
+(defun pad (lst len padding)
+  "Returns the original LST, with as many PADDING elements in front
+as necessary to reach length LEN"
+  (if (>= (length lst) len)
+      lst
+      (pad (cons padding lst) len padding)))
+
 (defun read-csv-line (filename)
   (mapcar #'parse-integer
           (split "," (uiop:read-file-string filename))))
@@ -89,3 +101,51 @@ START to END (excluded) have been replaced by SUBLST."
     (reset s))
   (incf (index s))
   (nth (index s) (seq s)))
+
+;; TODO this could be replaced by #'runs in Serapeum
+(defun streaks (lst partitions acc)
+  (cond ((and (null lst)
+              (not (null acc)))
+         (streaks lst (cons acc partitions) '()))
+        ((null lst) partitions)
+        ((and (car lst)
+              (null acc)) (streaks (cdr lst) partitions (cons (car lst) acc)))
+        ((and (car lst)
+              (not (null acc))
+              (eql (car acc)
+                   (car lst))) (streaks (cdr lst) partitions (cons (car lst) acc)))
+        ((and (car lst)
+              (not (null acc))
+              (not (eql (car acc)
+                        (car lst))))
+         (streaks (cdr lst) (cons acc partitions) (cons (car lst) '())))))
+
+(defun extractions (lst len)
+  "Returns a list of all the possible sequences of length LEN built using
+elements from LST (with repetitions)."
+  (let ((results '()))
+    (labels ((%extractions (lst len acc)
+               (if (= len (length acc))
+                   (push acc results)
+                   (loop for el in lst
+                         do (%extractions lst len (cons el acc))))))
+      (%extractions lst len '()))
+    results))
+
+(defun permutations (lst)
+  "Returns a list of all the possible sequences of length LEN built using
+elements from LST (with repetitions)."
+  (let ((results '()))
+    (labels ((%extractions (avail acc)
+               (if (null avail)
+                   (push acc results))
+               (loop for el in avail
+                     do (%extractions (remove el avail)
+                                      (cons el acc)))))
+      (%extractions lst '()))
+    results))
+
+(defun but-last (lst)
+  (loop for l on lst
+        while (rest l)
+        collect (first l)))

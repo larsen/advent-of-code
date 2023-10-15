@@ -1,17 +1,21 @@
 (in-package #:advent-of-code)
 
 (defun aoc2019/day2/solution1 ()
-  (let ((program (read-program (asdf:system-relative-pathname
-                                'advent-of-code "inputs/2019/day2"))))
+  (let ((cpu (make-instance 'cpu))
+        (program (intcode-read-program (asdf:system-relative-pathname
+                                        'advent-of-code "inputs/2019/day2"))))
     (setf (aref program 1) 12)
     (setf (aref program 2) 2)
-    (run-program program)
-    (aref program 0)))
+    (setf (mem cpu) program)
+    (run! cpu)
+    (aref (mem cpu) 0)))
 
 ;; UGLY
+
 (defun aoc2019/day2/solution2 ()
-  (let ((original-program (read-program (asdf:system-relative-pathname
-                                         'advent-of-code "inputs/2019/day2")))
+  (let ((cpu (make-instance 'cpu))
+        (original-program (intcode-read-program (asdf:system-relative-pathname
+                                                 'advent-of-code "inputs/2019/day2")))
         (program nil)
         (res-noun nil)
         (res-verb nil))
@@ -20,7 +24,9 @@
                         do (setf program (alexandria:copy-array original-program))
                            (setf (aref program 1) noun)
                            (setf (aref program 2) verb)
-                           (run-program program)
+                           (reset! cpu)
+                           (setf (mem cpu) program)
+                           (run! cpu)
                         when (= (aref program 0) 19690720)
                           do (setf res-noun noun)
                              (setf res-verb verb)))
