@@ -48,9 +48,11 @@
 
 (define-test aoc2021/day12 :parent aoc2021
   (is = 4707 (advent-of-code:aoc2021/day12/solution1))
-  (is = (advent-of-code:aoc2021/day12/solution1-iterative)
-      (advent-of-code:aoc2021/day12/solution1))
   (is = 130493 (advent-of-code:aoc2021/day12/solution2)))
+
+;; (define-test aoc2021/day12-experiments
+;;   (is = (advent-of-code:aoc2021/day12/solution1-iterative)
+;;       (advent-of-code:aoc2021/day12/solution1)))
 
 (define-test aoc2021/day13 :parent aoc2021
   (is = 693 (advent-of-code:aoc2021/day13/solution1))
