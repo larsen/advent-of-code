@@ -149,3 +149,9 @@ elements from LST (with repetitions)."
   (loop for l on lst
         while (rest l)
         collect (first l)))
+
+(defun find-index (item lst &key (test 'eql))
+  "Find the index of ITEM in the list LST, or return NIL if not found."
+  (loop for element in lst
+        until (funcall test element item)
+        count t))
