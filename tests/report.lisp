@@ -42,6 +42,31 @@ corresponding day number (3)"
       ("\(\\d+\)\$" (symbol-name test-name))
     day))
 
+(defun print-aoc-legend-and-summary-stats (tests &optional (stream *standard-output*))
+  (let ((solved-problems-count (loop with solved-counter = 0
+                                     for year-tests being the hash-values of tests
+                                     do (loop for daily-test across year-tests
+                                              do (loop for problems-test across daily-test
+                                                       when (or (eql :passed (status problems-test))
+                                                                (and (eql :passed (status problems-test))
+                                                                     (eql 'controlling-result (type-of problems-test))
+                                                                     (eql :skipped (child-status problems-test))))
+                                                         do (incf solved-counter)))
+                                     finally (return solved-counter)))
+        (total-problems-count (* 50 (length (alexandria:hash-table-keys tests)))))
+    (format stream
+            "~&~%
+*: Problem solved
+s: Test skipped
+f: Failed test
+
+Progress: ~a/~a (~$%)
+
+" solved-problems-count
+            total-problems-count
+            (* 100.0 (/ solved-problems-count total-problems-count))
+            )))
+
 (defmethod summarize ((report aoc-report))
   ;; For AOC tests, we have a three-level hierarchy:
   ;; - The top level test marks the year, e.g. aoc2019
@@ -65,13 +90,7 @@ corresponding day number (3)"
                   (- (test-name->day-number (name (expression test))) 1))
             (results test)))
     ;; Now pretty-printing the structure
-    (format (output report)
-            "~&~%
-*: Problem solved
-s: Test skipped
-f: Failed test
-
-")
+    (print-aoc-legend-and-summary-stats test-hierarchy (output report))
     (print-table (loop for k being the hash-keys of test-hierarchy
                        for v being the hash-values of test-hierarchy
                        collect (append (list k)
