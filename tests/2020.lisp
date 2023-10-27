@@ -36,8 +36,7 @@
 
 (define-test aoc2020/day9 :parent aoc2020
   (is = 22477624 (advent-of-code:aoc2020/day9/solution1))
-  ;(is = 2980044 (advent-of-code:aoc2020/day9/solution2))
-  )
+  (is = 2980044 (advent-of-code:aoc2020/day9/solution2)))
 
 (define-test aoc2020/day10 :parent aoc2020
   (is = 3000 (advent-of-code:aoc2020/day10/solution1))
@@ -66,3 +65,8 @@
 
 (define-test aoc2020/day16 :parent aoc2020
   (is = 20048 (advent-of-code:aoc2020/day16/solution1)))
+
+(define-test aoc2020/day17 :parent aoc2020
+  (is = 348 (advent-of-code:aoc2020/day17/solution1))
+  (skip "Slow"
+    (is = 348 (advent-of-code:aoc2020/day17/solution2))))

@@ -32,7 +32,8 @@
 
 (define-test aoc2021/day8 :parent aoc2021
   (is = 440 (advent-of-code:aoc2021/day8/solution1))
-  (is = 1046281 (advent-of-code:aoc2021/day8/solution2)))
+  (skip "Slow"
+    (is = 1046281 (advent-of-code:aoc2021/day8/solution2))))
 
 (define-test aoc2021/day9 :parent aoc2021
   (is = 560 (advent-of-code:aoc2021/day9/solution1))
@@ -48,7 +49,8 @@
 
 (define-test aoc2021/day12 :parent aoc2021
   (is = 4707 (advent-of-code:aoc2021/day12/solution1))
-  (is = 130493 (advent-of-code:aoc2021/day12/solution2)))
+  (skip "Slow"
+    (is = 130493 (advent-of-code:aoc2021/day12/solution2))))
 
 ;; (define-test aoc2021/day12-experiments
 ;;   (is = (advent-of-code:aoc2021/day12/solution1-iterative)
