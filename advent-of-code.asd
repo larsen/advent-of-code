@@ -51,7 +51,9 @@
                (:module "2018"
                 :components ((:file "day1")
                              (:file "day2")
-                             (:file "day3")))
+                             (:file "day3")
+                             (:file "day5")
+                             (:file "day7")))
                (:module "2019"
                 :components ((:file "intcode")
                              (:file "day1")
