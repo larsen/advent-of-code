@@ -80,5 +80,6 @@
 (define-test aoc2015/day19 :parent aoc2015
   (is = 518 (advent-of-code:aoc2015/day19/solution1)))
 
-;; (define-test aoc2015/day20 :parent aoc2015
-;;   (is = 831600 (advent-of-code:aoc2015/day20/solution1)))
+(define-test aoc2015/day20 :parent aoc2015
+  (skip "Slow"
+    (is = 831600 (advent-of-code:aoc2015/day20/solution1))))
