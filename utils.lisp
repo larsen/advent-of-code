@@ -155,3 +155,15 @@ elements from LST (with repetitions)."
   (loop for element in lst
         until (funcall test element item)
         count t))
+
+(defun unique (sequence &key (test 'eql))
+  (let ((seen (make-hash-table :test test)))
+    (loop for e in sequence
+          do (incf (gethash e seen 0))
+          finally (return (hash-table-keys seen)))))
+
+(defun pairs (lst)
+  "Returns all possible pairs made with elements of LST."
+  (loop for elem1 in lst
+        append (loop for elem2 in (remove elem1 lst)
+                     collect (cons elem1 elem2))))
