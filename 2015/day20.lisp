@@ -1,11 +1,5 @@
 (in-package #:advent-of-code)
 
-(defun unique (sequence)
-  (let ((seen (make-hash-table)))
-    (loop for e in sequence
-          do (incf (gethash e seen 0))
-          finally (return (hash-table-keys seen)))))
-
 (defun divisors (n)
   "Returns the (unsorted) list of divisors of N"
   (declare (type (integer 0) n))
