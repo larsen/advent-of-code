@@ -1,14 +1,12 @@
 (in-package #:advent-of-code)
 
 (defun aoc2019/day2/solution1 ()
-  (let ((cpu (make-instance 'cpu))
-        (program (intcode-read-program (asdf:system-relative-pathname
+  (let ((cpu (make-cpu :program-file (asdf:system-relative-pathname
                                         'advent-of-code "inputs/2019/day2"))))
-    (setf (aref program 1) 12)
-    (setf (aref program 2) 2)
-    (setf (mem cpu) program)
+    (poke cpu 1 12)
+    (poke cpu 2 2)
     (run! cpu)
-    (aref (mem cpu) 0)))
+    (peek cpu 0)))
 
 ;; UGLY
 
