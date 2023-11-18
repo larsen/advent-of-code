@@ -4,7 +4,8 @@
   (destructuring-bind (template rules-raw)
       (split "\\n\\n"
              (uiop:read-file-string
-              (asdf:system-relative-pathname 'advent-of-code "inputs/2021/day14-test")))
+              (asdf:system-relative-pathname
+               'advent-of-code "inputs/2021/day14")))
     (values template
             (mapcar (lambda (rule-raw)
                       (destructuring-bind (from to)
