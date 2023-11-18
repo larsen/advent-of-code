@@ -3,8 +3,8 @@
 (defun read-reindeers ()
   (let ((reindeers (make-hash-table :test #'equal))
         (re "(\\w+) can fly (\\d+) km/s for (\\d+) seconds, but then must rest for (\\d+) seconds."))
-    (loop for r in (uiop:read-file-lines (asdf:system-relative-pathname 'advent-of-code
-                                                                        "inputs/2015/day14"))
+    (loop for r in (uiop:read-file-lines (asdf:system-relative-pathname
+                                          'advent-of-code "inputs/2015/day14"))
           do (register-groups-bind (name
                                     (#'parse-integer speed)
                                     (#'parse-integer flying-time)
