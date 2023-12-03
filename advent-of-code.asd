@@ -112,7 +112,10 @@
                              (:file "day13")
                              (:file "day14")
                              (:file "day15")
-                             (:file "day16"))))
+                             (:file "day16")))
+               (:module "2023"
+                :components ((:file "day1")
+                             (:file "day2"))))
   :in-order-to ((test-op (test-op #:advent-of-code/test))))
 
 (asdf:defsystem #:advent-of-code/test
@@ -128,5 +131,6 @@
                              (:file "2019")
                              (:file "2020")
                              (:file "2021")
-                             (:file "2022"))))
+                             (:file "2022")
+                             (:file "2023"))))
   :perform (test-op (op _) (symbol-call :advent-of-code/test :run-aoc-tests)))

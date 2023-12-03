@@ -52,9 +52,8 @@
   (is = 321 (advent-of-code:aoc2022/day12/solution2)))
 
 (define-test day13 :parent aoc2022
-  (skip "Unstable"
-    (is = 5366 (advent-of-code:aoc2022/day13/solution1))
-    (is = 23391 (advent-of-code:aoc2022/day13/solution2))))
+  (is = 5366 (advent-of-code:aoc2022/day13/solution1))
+  (is = 23391 (advent-of-code:aoc2022/day13/solution2)))
 
 (define-test day14 :parent aoc2022
   (is = 1133 (advent-of-code:aoc2022/day14/solution1))
@@ -68,3 +67,6 @@
 (define-test day16 :parent aoc2022
   (skip "Slow"
     (is = 1767 (advent-of-code:aoc2022/day16/solution1))))
+
+(define-test day18 :parent aoc2022
+  (is = 4300 (advent-of-code:aoc2022/day18/solution1)))

@@ -113,4 +113,8 @@
            aoc2022/day13/solution1 aoc2022/day13/solution2
            aoc2022/day14/solution1 aoc2022/day14/solution2
            aoc2022/day15/solution1 aoc2022/day15/solution2
-           aoc2022/day16/solution1))
+           aoc2022/day16/solution1
+           aoc2022/day18/solution1
+
+           aoc2023/day1/solution1 aoc2023/day1/solution2
+           aoc2023/day2/solution1 aoc2023/day2/solution2))
