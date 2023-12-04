@@ -117,4 +117,6 @@
            aoc2022/day18/solution1
 
            aoc2023/day1/solution1 aoc2023/day1/solution2
-           aoc2023/day2/solution1 aoc2023/day2/solution2))
+           aoc2023/day2/solution1 aoc2023/day2/solution2
+           aoc2023/day3/solution1 aoc2023/day3/solution2
+           aoc2023/day4/solution1 aoc2023/day4/solution2))
