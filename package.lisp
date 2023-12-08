@@ -4,7 +4,8 @@
         #:md5
         #:org.tfeb.hax.memoize
         #:split-sequence
-        #:sketch)
+        #:sketch
+        #:rtg-math.base-vectors)
   (:shadowing-import-from #:alexandria
                           #:rotate)
   (:export aoc2015/day1/solution1 aoc2015/day1/solution2
@@ -63,6 +64,8 @@
            aoc2019/day7/solution1 aoc2019/day7/solution2
            aoc2019/day8/solution1 aoc2019/day8/solution2
            aoc2019/day9/solution1 aoc2019/day9/solution2
+           aoc2019/day12/solution1 aoc2019/day12/solution2
+           aoc2019/day13/solution1 aoc2019/day13/solution2
 
            aoc2020/day1/solution1 aoc2020/day1/solution2
            aoc2020/day2/solution1 aoc2020/day2/solution2
@@ -80,6 +83,8 @@
            aoc2020/day14/solution1 aoc2020/day14/solution2
            aoc2020/day15/solution1 aoc2020/day15/solution2
            aoc2020/day16/solution1
+           aoc2020/day17/solution1 aoc2020/day17/solution2
+           aoc2020/day18/solution1
 
            aoc2021/day1/solution1 aoc2021/day1/solution2
            aoc2021/day2/solution1 aoc2021/day2/solution2
@@ -119,4 +124,7 @@
            aoc2023/day1/solution1 aoc2023/day1/solution2
            aoc2023/day2/solution1 aoc2023/day2/solution2
            aoc2023/day3/solution1 aoc2023/day3/solution2
-           aoc2023/day4/solution1 aoc2023/day4/solution2))
+           aoc2023/day4/solution1 aoc2023/day4/solution2
+           aoc2023/day5/solution1
+           aoc2023/day6/solution1 aoc2023/day6/solution2
+           aoc2023/day7/solution1))

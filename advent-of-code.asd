@@ -4,9 +4,10 @@
   :license  "Specify license here"
   :version "0.0.1"
   :serial t
-  :depends-on (#:alexandria #:cl-ppcre #:md5 #:memoize #:split-sequence
+  :depends-on (#:alexandria #:serapeum #:cl-ppcre #:md5 #:memoize #:split-sequence
                             #:jonathan #:magicl
-                            #:sketch)
+                            #:sketch
+                            #:rtg-math)
   :components ((:file "package")
                (:file "utils")
                (:module "2015"
@@ -117,7 +118,10 @@
                 :components ((:file "day1")
                              (:file "day2")
                              (:file "day3")
-                             (:file "day4"))))
+                             (:file "day4")
+                             (:file "day5")
+                             (:file "day6")
+                             (:file "day7"))))
   :in-order-to ((test-op (test-op #:advent-of-code/test))))
 
 (asdf:defsystem #:advent-of-code/test
