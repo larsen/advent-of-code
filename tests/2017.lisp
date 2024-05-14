@@ -12,8 +12,7 @@
 
 (define-test aoc2017/day3 :parent aoc2017
   (is = 480 (advent-of-code:aoc2017/day3/solution1))
-  ;(is (= (advent-of-code:aoc2017/day3/solution2) 0))
-  )
+  (is = 349975 (advent-of-code:aoc2017/day3/solution2)))
 
 (define-test aoc2017/day4 :parent aoc2017
   (is = 383 (advent-of-code:aoc2017/day4/solution1))

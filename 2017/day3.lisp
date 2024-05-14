@@ -40,26 +40,34 @@ closest"
 (defun aoc2017/day3/solution1 ()
   (spiral-manhattan-distance *2017/day3/input*))
 
-;; The second part seems to require some radically different
-;; technique.  For a given square on the spiral, are we abel to
-;; compute the values stored in the 8 Manhattan directions?
-;; If they are treated as indexes in an array of solutions, we
-;; can compute the value for a square recursively
-;;
-;; f(n) = sum( f(n') for n' being the index in all the directions,
-;;             except those that result in indexes larger than n )
-;;
-;; Let's try first to build a correspondence between
-;; the natural numbers and coordinates (we'll need to use the reverse
-;; of this, later)
 
-(defun n-to-coordinates (n)
-  (loop with initial-x = 0
-        with initial-y = 0
-        with dirs = #(up left down right)
-        for counter from 0
-        repeat n
-        collect (aref dirs (mod counter 4))))
+(defparameter *adjacent-cells-directions*
+  (list #c(-1 -1) #c(0 -1) #c(1 -1)
+        #c(-1 0)      #c(1 0)
+        #c(-1 1) #c(0 1) #c(1 1)))
 
 (defun aoc2017/day3/solution2 ()
-  )
+  (let* ((grid (make-hash-table))
+         (directions `((:right . ,#c(1 0))
+                       (:up    . ,#c(0 -1))
+                       (:left  . ,#c(-1 0))
+                       (:down  . ,#c(0 1))))
+         (directions-iterator (make-instance 'wrapped-sequence
+                                             :sequence (mapcar #'car directions)))
+         (pos #c(0 0))
+         last-value-found)
+    (setf (gethash pos grid) 1)
+    (setf last-value-found 1)
+    ;; This is a spiraling "stepper"
+    (loop for n from 1
+          do (loop repeat 2
+                   for dir = (next directions-iterator)
+                   do (loop repeat n
+                            do (incf pos (cdr (assoc dir directions)))
+                               (setf last-value-found
+                                     (safesum (mapcar
+                                               (lambda (d) (gethash (+ pos d) grid nil))
+                                               *adjacent-cells-directions*)))
+                               (setf (gethash pos grid) last-value-found)
+                            when (> last-value-found *2017/day3/input*)
+                              do (return-from aoc2017/day3/solution2 last-value-found))))))
