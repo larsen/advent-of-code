@@ -28,3 +28,7 @@
 
 (define-test aoc2017/day7 :parent aoc2017
   (is string= "dgoocsw" (advent-of-code:aoc2017/day7/solution1)))
+
+(define-test aoc2017/day8 :parent aoc2017
+  (is = 3880 (advent-of-code:aoc2017/day8/solution1))
+  (is = 5035 (advent-of-code:aoc2017/day8/solution2)))
