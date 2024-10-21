@@ -58,14 +58,27 @@
         when (not (eq (unit-kind e) (unit-kind u)))
           collect e))
 
-(defmethod adjacent-open-squares ((u unit) (bb beverage-bandits))
+(defmethod adjacent-squares ((u unit) (bb beverage-bandits))
   (let ((directions '((0 . -1) (-1 . 0) (1 . 0) (0 . 1))))
     (loop for d in directions
           for (row col) = (list (+ (car d) (unit-row u))
                                 (+ (cdr d) (unit-col u)))
-          when (and (array-in-bounds-p (beverage-bandits-cavern bb) row col)
-                    (char= #\. (aref (beverage-bandits-cavern bb) row col)))
+          when (array-in-bounds-p (beverage-bandits-cavern bb) row col)
             collect (cons row col))))
+
+(defmethod adjacent-open-squares ((u unit) (bb beverage-bandits))
+  (loop for (row . col) in (adjacent-squares u bb)
+        when (char= #\. (aref (beverage-bandits-cavern bb) row col))
+          collect (cons row col)))
+
+(defmethod adjacent-enemy-squares ((u unit) (bb beverage-bandits))
+  (loop for (row . col) in (adjacent-squares u bb)
+        when (cond
+               ((eq (unit-kind u) :goblin)
+                (char= #\E (aref (beverage-bandits-cavern bb) row col)))
+               ((eq (unit-kind u) :elf)
+                (char= #\G (aref (beverage-bandits-cavern bb) row col))))
+          collect (cons row col)))
 
 (defgeneric in-range-of-targets (unit beverage-bandits))
 (defmethod in-range-of-targets ((u unit) (bb beverage-bandits))
@@ -156,12 +169,17 @@
     (loop for u in units
           for color = (case (unit-kind u)
                         (:goblin +magenta+)
-                        (:elf +green+))
+                        (:elf (rgb 0 .7 0)))
           do (with-pen (make-pen :fill color :stroke +white+)
                (rect (* (unit-col u) cell-size)
                      (* (unit-row u) cell-size)
                      (- cell-size 1)
-                     (- cell-size 1))))))
+                     (- cell-size 1)))
+             (with-font (make-font :size (* cell-size .65) :color +white+)
+               (text (format nil "~a" (unit-hit-points u))
+                     (* (unit-col u) cell-size)
+                     (* (unit-row u) cell-size)
+                     )))))
 
 (defun sketch-of-targets (selected-unit bb cell-size)
   (with-pen (make-pen :fill +red+ :stroke +black+)
@@ -285,12 +303,20 @@
 
 (defmethod unit-attack ((u unit) (bb beverage-bandits))
   ;; To attack, the unit first determines all of the targets that are
-  ;; in range of it by being immediately adjacent to it. If there are
-  ;; no such targets, the unit ends its turn. Otherwise, the adjacent
+  ;; in range of it by being immediately adjacent to it.
+  ;; If there are
+  ;; no such targets, the unit ends its turn.
+  ;; Otherwise, the adjacent
   ;; target with the fewest hit points is selected; in a tie, the
   ;; adjacent target with the fewest hit points which is first in
   ;; reading order is selected.
-  )
+  (let* ((enemy-squares (adjacent-enemy-squares u bb))
+         (enemies (loop for s in enemy-squares
+                        collect (find-if (lambda (e)
+                                           (and (= (unit-row e) (car s))
+                                                (= (unit-col e) (cdr s))))
+                                         (beverage-bandits-units bb)))))
+    enemies))
 
 (defun beverage-bandits-step (bb)
   (setf (beverage-bandits-units bb)
@@ -303,7 +329,7 @@
                (let ((move (compute-unit-move u bb)))
                  (setf (unit-row u) (car move)
                        (unit-col u) (cdr move))))
-           ;(unit-attack u in-range-squares bb)
+           (unit-attack u bb)
         until (emptyp targets)
         finally (return bb)))
 
