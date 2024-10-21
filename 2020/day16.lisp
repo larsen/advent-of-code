@@ -103,10 +103,10 @@
         )
       )))
 
-(defun test ()
-  (multiple-value-bind (rules my-ticket nearby-tickets)
-      (read-reference-document)
-    (print my-ticket)))
+;; (defun test ()
+;;   (multiple-value-bind (rules my-ticket nearby-tickets)
+;;       (read-reference-document)
+;;     (print my-ticket)))
 
 ;; 4810284647569
 ;; (apply #'* (mapcar (lambda (n)

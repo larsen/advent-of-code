@@ -70,3 +70,6 @@
   (is = 348 (advent-of-code:aoc2020/day17/solution1))
   (skip "Slow"
     (is = 348 (advent-of-code:aoc2020/day17/solution2))))
+
+(define-test aoc2020/day18 :parent aoc2020
+  (is = 14208061823964 (advent-of-code:aoc2020/day18/solution1)))
