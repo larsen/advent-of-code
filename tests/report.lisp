@@ -42,15 +42,15 @@ corresponding day number (3)"
       ("\(\\d+\)\$" (symbol-name test-name))
     day))
 
+(defun solvedp (problems-test)
+  (eql :passed (status problems-test)))
+
 (defun print-aoc-legend-and-summary-stats (tests &optional (stream *standard-output*))
   (let ((solved-problems-count (loop with solved-counter = 0
                                      for year-tests being the hash-values of tests
-                                     do (loop for daily-test across year-tests
-                                              do (loop for problems-test across daily-test
-                                                       when (or (eql :passed (status problems-test))
-                                                                (and (eql :passed (status problems-test))
-                                                                     (eql 'controlling-result (type-of problems-test))
-                                                                     (eql :skipped (child-status problems-test))))
+                                     do (loop for daily-tests across year-tests
+                                              do (loop for problems-test across daily-tests
+                                                       when (solvedp problems-test)
                                                          do (incf solved-counter)))
                                      finally (return solved-counter)))
         (total-problems-count (* 50 (length (alexandria:hash-table-keys tests)))))
@@ -63,9 +63,8 @@ f: Failed test
 Progress: ~a/~a (~$%)
 
 " solved-problems-count
-            total-problems-count
-            (* 100.0 (/ solved-problems-count total-problems-count))
-            )))
+total-problems-count
+(* 100.0 (/ solved-problems-count total-problems-count)))))
 
 (defmethod summarize ((report aoc-report))
   ;; For AOC tests, we have a three-level hierarchy:

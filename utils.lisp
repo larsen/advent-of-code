@@ -81,6 +81,9 @@ as necessary to reach length LEN"
 (defun sum (lst)
   (reduce #'+ lst))
 
+(defun safesum (lst)
+  (sum (remove-if #'null lst)))
+
 (defun transpose (lst)
   (apply #'mapcar #'list lst))
 
@@ -162,8 +165,72 @@ elements from LST (with repetitions)."
           do (incf (gethash e seen 0))
           finally (return (hash-table-keys seen)))))
 
+;; FIXME: it does not work with conses
 (defun pairs (lst)
   "Returns all possible pairs made with elements of LST."
   (loop for elem1 in lst
         append (loop for elem2 in (remove elem1 lst)
                      collect (cons elem1 elem2))))
+
+(defun partition (lst n)
+  (loop for offset from 0 below (length lst) by n
+        collect (subseq lst offset (+ offset n))))
+
+;; Dijkstra
+
+(defun general-shortest-path (map &key start goal
+                                    (valid-p (lambda (dest src map)
+                                               (declare (ignore dest src map)) T))
+                                    (directions '((-1 . 0) (0 . 1) (1 . 0) (0 . -1))))
+  "Applies Dijkstra shortest path algorithm to a graph represented with the
+2D array MAP. In the array, adjacent elements are intended as adjacent
+nodes in the graph. START and GOAL are a cons of coordinates (row and
+col) in the array. VALID-P is an optional function that
+returns a boolean value, to determine if an edge from DEST to SRC is
+valid. DIRECTIONS refer to the directions in the map the algorithm
+should consider to find another node (defaults to orthogonal
+directions)"
+  (let* ((shape (array-dimensions map))
+         (dists (make-array shape :initial-element infinity))
+         (non-visited-nodes (loop for r from 0 below (first shape)
+                                  append (loop for c from 0 below (second shape)
+                                               collect (cons r c)))))
+    (labels ((extract-min-dist-node ()
+               (let ((res (loop with min-dist = infinity
+                                with min-node = nil
+                                for node in non-visited-nodes
+                                when (<= (aref dists (car node) (cdr node))
+                                         min-dist)
+                                  do (setf min-node node
+                                           min-dist (aref dists (car node) (cdr node)))
+                                finally (return min-node))))
+                 (setf non-visited-nodes (remove res non-visited-nodes))
+                 res))
+
+             (adjacents (node valid-p)
+               (loop for dir in directions
+                     for candidate = (cons (+ (car node) (car dir))
+                                           (+ (cdr node) (cdr dir)))
+                     when (and (array-in-bounds-p map
+                                                  (car candidate)
+                                                  (cdr candidate))
+                               (funcall valid-p candidate node map))
+                       collect candidate)))
+
+      ;; Dijkstra
+      (loop for r from 0 below (first shape)
+            do (loop for c from 0 below (second shape)
+                     when (equal start (cons r c))
+                       do (setf (aref dists r c) 0)))
+      (loop while non-visited-nodes
+            do (loop with u = (extract-min-dist-node)
+                     for v in (adjacents u valid-p)
+                     do (setf (aref dists (car v) (cdr v))
+                              (min (aref dists (car v) (cdr v))
+                                   (+ 1 (aref dists (car u) (cdr u)))))))
+      (loop with res = nil
+            for r from 0 below (first shape)
+            do (loop for c from 0 below (second shape)
+                     when (equal goal (cons r c))
+                       do (setf res (aref dists r c)))
+            finally (return (values res dists))))))
