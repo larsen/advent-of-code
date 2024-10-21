@@ -128,4 +128,7 @@
            aoc2023/day4/solution1 aoc2023/day4/solution2
            aoc2023/day5/solution1
            aoc2023/day6/solution1 aoc2023/day6/solution2
-           aoc2023/day7/solution1))
+           aoc2023/day7/solution1
+           aoc2023/day8/solution1
+           aoc2023/day9/solution1 aoc2023/day9/solution2
+           aoc2023/day11/solution1 aoc2023/day11/solution2))
