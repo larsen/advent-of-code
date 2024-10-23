@@ -41,7 +41,8 @@
                              (:file "day6")
                              (:file "day7")
                              (:file "day8")
-                             (:file "day9")))
+                             (:file "day9")
+                             (:file "day12")))
                (:module "2017"
                 :components ((:file "day1")
                              (:file "day2")

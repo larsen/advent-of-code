@@ -46,3 +46,9 @@
   ;; (is = 18 (length (decompress "X(8x2)(3x3)ABCY")))
   (is = 150914 (advent-of-code:aoc2016/day9/solution1))
   (is = 0 (advent-of-code:aoc2016/day9/solution2)))
+
+(define-test aoc2016/day12 :parent aoc2016
+  (skip "Slow"
+    (is = 318007 (advent-of-code:aoc2016/day12/solution1)))
+  (skip "Slow"
+    (is = 9227661 (advent-of-code:aoc2016/day12/solution2))))
