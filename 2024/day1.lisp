@@ -1,0 +1,23 @@
+(in-package #:advent-of-code)
+
+(defun aoc2024/day1/solution1 ()
+  (let* ((numbers (read-all-the-numbers "inputs/2024/day1"))
+         (lists-of-numbers (transpose (partition numbers 2))))
+    (loop for a in (sort (copy-list (first lists-of-numbers)) #'<)
+          for b in (sort (copy-list (second lists-of-numbers)) #'<)
+          sum (abs (- a b)))))
+
+(defun aoc2024/day1/solution2 ()
+  (let* ((numbers (read-all-the-numbers "inputs/2024/day1"))
+         (lists-of-numbers (transpose (partition numbers 2))))
+    (loop for n in (first lists-of-numbers)
+          sum (* n (count n (second lists-of-numbers))))))
+
+(defun aoc2024/day1/solution2-variant ()
+  (let* ((numbers (read-all-the-numbers "inputs/2024/day1"))
+         (lists-of-numbers (transpose (partition numbers 2)))
+         (occurrences-table (make-hash-table)))
+    (loop for n in (second lists-of-numbers)
+          do (incf (gethash n occurrences-table 0)))
+    (loop for n in (first lists-of-numbers)
+          sum (* n (gethash n occurrences-table 0)))))

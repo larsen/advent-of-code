@@ -8,6 +8,12 @@
   (uiop:read-file-lines
    (asdf:system-relative-pathname 'advent-of-code filename)))
 
+(defun read-all-the-numbers (filename)
+  (mapcar #'parse-integer
+          (split "\\s+" (uiop:read-file-string
+                         (asdf:system-relative-pathname
+                          :advent-of-code filename)))))
+
 (let ((last-returned-value))
   (defun flip-flop (value1 value2)
     (unless last-returned-value
