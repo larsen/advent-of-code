@@ -131,7 +131,8 @@
                              (:file "day11")))
                (:module "2024"
                 :components ((:file "day1")
-                             (:file "day2"))))
+                             (:file "day2")
+                             (:file "day3"))))
   :in-order-to ((test-op (test-op #:advent-of-code/test))))
 
 (asdf:defsystem #:advent-of-code/test
