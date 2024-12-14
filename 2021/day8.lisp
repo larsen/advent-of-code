@@ -51,7 +51,7 @@
             (cdr (assoc d +DIGITS-SEGMENTS+ :test 'string=)))
           digits))
 
-(defun translate (signals wiring)
+(defun translate-signals-wiring (signals wiring)
   (let ((wires-mapping (make-hash-table)))
     (loop for w1 across wiring
           for w2 across "abcdefg"
@@ -64,7 +64,7 @@
 ;; be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 (defun sensible-wiring (wiring notes)
   (loop for note in notes
-        always (find (translate note wiring)
+        always (find (translate-signals-wiring note wiring)
                      (mapcar #'first +DIGITS-SEGMENTS+)
                      :test #'string=)))
 
@@ -80,5 +80,5 @@
                         (+ (* acc 10) d))
                       (DIGITS-TO-NUMBER
                        (mapcar (lambda (d)
-                                 (translate d sensible-wiring))
+                                 (translate-signals-wiring d sensible-wiring))
                                digits))))))
