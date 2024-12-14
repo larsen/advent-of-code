@@ -125,6 +125,16 @@ f: Failed test
     ((eql :passed (status test)) (format nil "~,4fs" (duration test)))
     ((eql :failed (status test)) "/")))
 
+(defmethod aoc-test-duration-hist (test)
+  (cond
+    ((and (eql :passed (status test))
+          (eql 'controlling-result (type-of test))
+          (eql :skipped (child-status test))) "")
+    ((eql :passed (status test))
+     (format nil "~{~a~}" (make-list (floor (/ (duration test) 0.25))
+                                     :initial-element #\#)))
+    ((eql :failed (status test)) "")))
+
 (defmethod summarize ((report aoc-report-time))
   (let ((test-hierarchy (test-hierarchy report))
         (stream (output report)))
@@ -133,11 +143,13 @@ f: Failed test
           for year-tests being the hash-values of test-hierarchy
           do (loop for idx from 0 below (length year-tests)
                    for daily-tests = (aref year-tests idx)
-                   do (format stream "~&day ~3d " (+ 1 idx))
+                   do (format stream "~&~3d - " (+ 1 idx))
                       (loop for part from 1
                             for problems-test across daily-tests
-                            do (format stream "Part ~d: ~10a   " part
+                            do (format stream "Part ~d: ~7a ~10a  " part
                                        (if (solvedp problems-test)
                                            (printable-aoc-test-duration problems-test)
-                                           0)))))
-    test-hierarchy))
+                                           0)
+                                       (if (solvedp problems-test)
+                                           (aoc-test-duration-hist problems-test)
+                                           0)))))))
