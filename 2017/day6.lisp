@@ -58,4 +58,5 @@
 (defun aoc2017/day6/solution2 ()
   (multiple-value-bind (_ allocation)
       (cycle-detector (read-block-counts))
+    (declare (ignore _))
     (- (cycle-detector allocation) 1)))
