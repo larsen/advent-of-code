@@ -3,6 +3,8 @@
 ;; To run tests for a single year and print a report
 ;; from the advent-of-code/test package:
 ;; (test 'aoc2024 :report 'aoc-report)
+;; With execution time details
+;; (test 'aoc2024 :report 'aoc-report-time)
 
 (defclass aoc-report (summary)
   ())
