@@ -11,6 +11,9 @@
   (loop for cg in (read-calories-groups)
         maximizing (sum cg)))
 
+;; an alternative technique is to use the function
+;; BESTN from Serapeum
+
 (defun aoc2022/day1/solution2 ()
   (sum (subseq
         (sort (mapcar #'sum (read-calories-groups)) #'>)
