@@ -4,7 +4,7 @@
   (mapcar (lambda (str)
             (apply #'v! (mapcar #'parse-integer (split "," str))))
           (uiop:read-file-lines
-           (asdf:system-relative-pathname :advent-of-code "inputs/2022/day18-test"))))
+           (asdf:system-relative-pathname :advent-of-code "inputs/2022/day18"))))
 
 (defparameter *directions-alist*
   `((:up    . ,(v! 0 0 1))
