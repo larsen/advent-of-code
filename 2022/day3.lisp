@@ -31,6 +31,7 @@
 
 (defun aoc2022/day3/solution2 ()
   (loop with rucksacks = (read-rucksacks)
+        ;; Alternatively, we could use BATCHES from Serapeum
         for group in (chunks rucksacks 3)
         sum (priority (car (intersection (coerce (first group) 'list)
                                          (intersection (coerce (second group) 'list)
