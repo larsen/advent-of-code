@@ -22,7 +22,7 @@
                    do (incf count))
         finally (return count)))
 
-(defun rect (w h)
+(defun my-draw-rect (w h)
   (loop for y from 0 to (- h 1)
         do (loop for x from 0 to (- w 1)
                  do (setf (aref *screen* x y) t))))
@@ -70,7 +70,7 @@
         do (register-groups-bind ((#'parse-integer w)
                                   (#'parse-integer h))
                ("rect (\\d+)x(\\d+)" instr)
-             (rect w h))
+             (my-draw-rect w h))
            (register-groups-bind ((#'parse-integer col)
                                   (#'parse-integer n))
                ("rotate column x=(\\d+) by (\\d+)" instr)
