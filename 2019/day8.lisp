@@ -12,10 +12,6 @@
                                                     "inputs/2019/day8")))
         collect (- (char-code c) (char-code #\0))))
 
-(defun partition (lst n)
-  (loop for offset from 0 below (length lst) by n
-        collect (subseq lst offset (+ offset n))))
-
 (defun aoc2019/day8/solution1 ()
   (let* ((image-data (read-image-data))
          (layers (partition image-data (* +aoc2019/day8/picture-width+
