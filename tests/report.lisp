@@ -1,5 +1,9 @@
 (in-package #:advent-of-code/test)
 
+;; To run tests for a single year and print a report
+;; from the advent-of-code/test package:
+;; (test 'aoc2024 :report 'aoc-report)
+
 (defclass aoc-report (summary)
   ())
 
@@ -66,14 +70,7 @@ Progress: ~a/~a (~$%)
 total-problems-count
 (* 100.0 (/ solved-problems-count total-problems-count)))))
 
-(defmethod summarize ((report aoc-report))
-  ;; For AOC tests, we have a three-level hierarchy:
-  ;; - The top level test marks the year, e.g. aoc2019
-  ;;   This level has no parent
-  ;;   - under that, we have individual groups for each day, e.g. aoc2019/day1
-  ;;     their parent is the top level test
-  ;;     - under that, there are individual test for each part of the day,
-  ;;       including .../solution1 and .../solution2 that mark the two daily problems
+(defmethod test-hierarchy ((report report))
   (let ((test-hierarchy (make-hash-table)))
     ;; First we set up the keys...
     (dolist (parent-test (remove-if-not #'has-parent
@@ -88,7 +85,17 @@ total-problems-count
       (setf (aref (gethash (name (parent (expression test))) test-hierarchy)
                   (- (test-name->day-number (name (expression test))) 1))
             (results test)))
-    ;; Now pretty-printing the structure
+    test-hierarchy))
+
+(defmethod summarize ((report aoc-report))
+  ;; For AOC tests, we have a three-level hierarchy:
+  ;; - The top level test marks the year, e.g. aoc2019
+  ;;   This level has no parent
+  ;;   - under that, we have individual groups for each day, e.g. aoc2019/day1
+  ;;     their parent is the top level test
+  ;;     - under that, there are individual test for each part of the day,
+  ;;       including .../solution1 and .../solution2 that mark the two daily problems
+  (let ((test-hierarchy (test-hierarchy report)))
     (print-aoc-legend-and-summary-stats test-hierarchy (output report))
     (print-table (loop for k being the hash-keys of test-hierarchy
                        for v being the hash-values of test-hierarchy
@@ -99,3 +106,22 @@ total-problems-count
 
 (defun run-aoc-tests ()
   (parachute:test :advent-of-code/test :report 'aoc-report))
+
+(defclass aoc-report-time (summary)
+  ())
+
+(defmethod summarize ((report aoc-report-time))
+  (let ((test-hierarchy (test-hierarchy report))
+        (stream (output report)))
+    (loop for year being the hash-keys of test-hierarchy
+          for year-tests being the hash-values of test-hierarchy
+          do (format stream "~a~%" year)
+             (loop for idx from 0 below (length year-tests)
+                   for daily-tests = (aref year-tests idx)
+                   do (loop for part from 1
+                            for problems-test across daily-tests
+                            when (solvedp problems-test)
+                              do (format stream "day ~d/~d: ~fs~%"
+                                         (+ 1 idx) part
+                                         (duration problems-test)))))
+    test-hierarchy))
