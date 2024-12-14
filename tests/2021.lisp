@@ -59,3 +59,6 @@
 (define-test aoc2021/day13 :parent aoc2021
   (is = 693 (advent-of-code:aoc2021/day13/solution1))
   (is string= "UCLZRAZU" (advent-of-code:aoc2021/day13/solution2)))
+
+(define-test aoc2021/day14 :parent aoc2021
+  (is = 3906 (advent-of-code:aoc2021/day14/solution1)))
