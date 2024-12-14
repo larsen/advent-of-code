@@ -49,26 +49,33 @@ corresponding day number (3)"
 (defun solvedp (problems-test)
   (eql :passed (status problems-test)))
 
+
+(defun summary-stats (tests)
+  (let* ((solved-problems-count (loop with solved-counter = 0
+                                      for year-tests being the hash-values of tests
+                                      do (loop for daily-tests across year-tests
+                                               do (loop for problems-test
+                                                          across daily-tests
+                                                        when (solvedp problems-test)
+                                                          do (incf solved-counter)))
+                                      finally (return solved-counter)))
+         (total-problems-count (* 50 (length (alexandria:hash-table-keys tests))))
+         (solved-percentage (* 100.0 (/ solved-problems-count total-problems-count)))
+         (format-string "Progress: ~a/~a (~$%)"))
+    (format nil format-string
+            solved-problems-count total-problems-count
+            solved-percentage)))
+
 (defun print-aoc-legend-and-summary-stats (tests &optional (stream *standard-output*))
-  (let ((solved-problems-count (loop with solved-counter = 0
-                                     for year-tests being the hash-values of tests
-                                     do (loop for daily-tests across year-tests
-                                              do (loop for problems-test across daily-tests
-                                                       when (solvedp problems-test)
-                                                         do (incf solved-counter)))
-                                     finally (return solved-counter)))
-        (total-problems-count (* 50 (length (alexandria:hash-table-keys tests)))))
-    (format stream
-            "~&~%
+  (let* ((format-string "~&
 *: Problem solved
 s: Test skipped
 f: Failed test
 
-Progress: ~a/~a (~$%)
+~a
 
-" solved-problems-count
-total-problems-count
-(* 100.0 (/ solved-problems-count total-problems-count)))))
+"))
+    (format stream format-string (summary-stats tests))))
 
 (defmethod test-hierarchy ((report report))
   (let ((test-hierarchy (make-hash-table)))
@@ -107,21 +114,30 @@ total-problems-count
 (defun run-aoc-tests ()
   (parachute:test :advent-of-code/test :report 'aoc-report))
 
-(defclass aoc-report-time (summary)
+(defclass aoc-report-time (aoc-report)
   ())
+
+(defmethod printable-aoc-test-duration (test)
+  (cond
+    ((and (eql :passed (status test))
+          (eql 'controlling-result (type-of test))
+          (eql :skipped (child-status test))) "-")
+    ((eql :passed (status test)) (format nil "~,4fs" (duration test)))
+    ((eql :failed (status test)) "/")))
 
 (defmethod summarize ((report aoc-report-time))
   (let ((test-hierarchy (test-hierarchy report))
         (stream (output report)))
+    (format stream "~&~a~%~%" (summary-stats test-hierarchy))
     (loop for year being the hash-keys of test-hierarchy
           for year-tests being the hash-values of test-hierarchy
-          do (format stream "~a~%" year)
-             (loop for idx from 0 below (length year-tests)
+          do (loop for idx from 0 below (length year-tests)
                    for daily-tests = (aref year-tests idx)
-                   do (loop for part from 1
+                   do (format stream "~&day ~3d " (+ 1 idx))
+                      (loop for part from 1
                             for problems-test across daily-tests
-                            when (solvedp problems-test)
-                              do (format stream "day ~d/~d: ~fs~%"
-                                         (+ 1 idx) part
-                                         (duration problems-test)))))
+                            do (format stream "Part ~d: ~10a   " part
+                                       (if (solvedp problems-test)
+                                           (printable-aoc-test-duration problems-test)
+                                           0)))))
     test-hierarchy))
