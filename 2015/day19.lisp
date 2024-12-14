@@ -34,8 +34,8 @@
 (defparameter +h-molecules-encountered+ (make-hash-table :test #'equal))
 
 (defun count-steps-to-target-molecule (molecule replacements target-molecule steps)
-  (print steps)
   ;; Substitution rules can only make the molecule longer
+  ;; or the same length
   (incf +molecules-encountered+)
   (cond
     ;; We already encountered this molecule
