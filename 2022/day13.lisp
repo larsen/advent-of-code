@@ -52,11 +52,12 @@
           sum index))
 
 (defun aoc2022/day13/solution2 ()
-  (apply #'* (loop for index from 1
-                   for packet in (sort (append (read-all-packets)
-                                               '(((2)))
-                                               '(((6)))) #'packet<)
-                   when (member packet '(((2))
-                                         ((6)))
-                                :test #'equal)
-                     collect index)))
+  (let* ((packets (read-all-packets))
+         (augmented-packets (append packets
+                                    (list (list (list 2)))
+                                    (list (list (list 6)))))
+         (sorted-packets (sort augmented-packets #'packet<)))
+    (apply #'* (loop for index from 1
+                     for packet in sorted-packets
+                     when (member packet '(((2)) ((6))) :test #'equal)
+                       collect index))))
