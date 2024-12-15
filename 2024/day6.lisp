@@ -77,24 +77,30 @@
               (setf (guard-y guard) (cdr new-pos))))
       (T (turn-right guard) ))))
 
-(defun aoc2024/day6/solution1 ()
-  (let* ((lab-map (read-gallivant-map))
-         (guard (ensure-guard-in-map lab-map))
-         (positions (list (cons (guard-x guard)
+(defun simulate-guard-walk (gallivant-map guard)
+  (let* ((positions (list (cons (guard-x guard)
                                 (guard-y guard)))))
     (loop while (not (guard-has-left guard))
-          do (walk guard lab-map)
+          do (walk guard gallivant-map)
              (signal 'guard-moved :x (guard-x guard) :y (guard-y guard))
              (push (cons (guard-x guard) (guard-y guard))
                    positions)
-          finally (return (length (unique positions :test 'equal))))))
+          finally (return (unique positions :test 'equal)))))
+
+(defun aoc2024/day6/solution1 ()
+  (let* ((gallivant-map (read-gallivant-map))
+         (guard (ensure-guard-in-map gallivant-map))
+         (positions (simulate-guard-walk gallivant-map guard)))
+    (length positions)))
 
 (define-condition guard-moved ()
   ((x :initarg :x :accessor guard-moved-x)
    (y :initarg :y :accessor guard-moved-y)))
 
 (defun gallivant-simulation ()
-  (let ((gm (make-instance 'gallivant-map)))
+  (let* ((gallivant-map (read-gallivant-map))
+         (guard (ensure-guard-in-map gallivant-map))
+         (gm (make-instance 'gallivant-map)))
     (handler-bind ((guard-moved
                      (lambda (g)
                        (setf (guard-x (gallivant-map-guard gm))
@@ -102,7 +108,8 @@
                        (setf (guard-y (gallivant-map-guard gm))
                              (guard-moved-y g))
                        (sleep 0.05))))
-      (aoc2024/day6/solution1))))
+      (simulate-guard-walk gallivant-map guard))))
+
 
 (defun aoc2024/day6/solution2 ()
   )
