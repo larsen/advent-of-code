@@ -39,3 +39,12 @@
 (define-test aoc2019/day9 :parent aoc2019
   (is = 3906448201 (advent-of-code:aoc2019/day9/solution1))
   (is = 59785 (advent-of-code:aoc2019/day9/solution2)))
+
+(define-test aoc2019/day10 :parent aoc2019
+  (is = 288 (advent-of-code:aoc2019/day10/solution1)))
+
+(define-test aoc2019/day12 :parent aoc2019
+  (is = 5350 (advent-of-code:aoc2019/day12/solution1)))
+
+(define-test aoc2019/day13 :parent aoc2019
+  (is = 239 (advent-of-code:aoc2019/day13/solution1)))

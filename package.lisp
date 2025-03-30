@@ -66,6 +66,7 @@
            aoc2019/day7/solution1 aoc2019/day7/solution2
            aoc2019/day8/solution1 aoc2019/day8/solution2
            aoc2019/day9/solution1 aoc2019/day9/solution2
+           aoc2019/day10/solution1
            aoc2019/day12/solution1 aoc2019/day12/solution2
            aoc2019/day13/solution1 aoc2019/day13/solution2
 
