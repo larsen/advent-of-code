@@ -56,6 +56,7 @@
                 :components ((:file "day1")
                              (:file "day2")
                              (:file "day3")
+                             (:file "day4")
                              (:file "day5")
                              (:file "day7")))
                (:module "2019"
