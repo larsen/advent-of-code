@@ -5,6 +5,7 @@
   :version "0.0.1"
   :serial t
   :depends-on (#:alexandria #:serapeum #:cl-ppcre #:md5 #:memoize #:split-sequence
+                            #:local-time
                             #:jonathan #:magicl
                             #:sketch
                             #:rtg-math)
