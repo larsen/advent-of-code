@@ -41,6 +41,7 @@
            decompress
            aoc2016/day9/solution1 aoc2016/day9/solution2
            aoc2016/day12/solution1 aoc2016/day12/solution2
+           aoc2016/day13/solution1 aoc2016/day13/solution2
 
            aoc2017/day1/solution1 aoc2017/day1/solution2
            aoc2017/day2/solution1 aoc2017/day2/solution2
