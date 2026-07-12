@@ -52,3 +52,7 @@
     (is = 318007 (advent-of-code:aoc2016/day12/solution1)))
   (skip "Slow"
     (is = 9227661 (advent-of-code:aoc2016/day12/solution2))))
+
+(define-test aoc2016/day13 :parent aoc2016
+  (is = 96 (advent-of-code:aoc2016/day13/solution1))
+  (is = 141 (advent-of-code:aoc2016/day13/solution2)))
