@@ -52,6 +52,19 @@ corresponding day number (3)"
   (eql :passed (status problems-test)))
 
 
+(defvar +problems-per-year+
+  '(("AOC2015" . 50)
+    ("AOC2016" . 50)
+    ("AOC2017" . 50)
+    ("AOC2018" . 50)
+    ("AOC2019" . 50)
+    ("AOC2020" . 50)
+    ("AOC2021" . 50)
+    ("AOC2022" . 50)
+    ("AOC2023" . 50)
+    ("AOC2024" . 50)
+    ("AOC2025" . 24)))
+
 (defun summary-stats (tests)
   (let* ((solved-problems-count (loop with solved-counter = 0
                                       for year-tests being the hash-values of tests
@@ -61,7 +74,10 @@ corresponding day number (3)"
                                                         when (solvedp problems-test)
                                                           do (incf solved-counter)))
                                       finally (return solved-counter)))
-         (total-problems-count (* 50 (length (alexandria:hash-table-keys tests))))
+         (total-problems-count (loop for year being the hash-keys of tests
+                                     for problems-in-year = (cdr (assoc (string year)
+                                                                        +problems-per-year+ :test 'equal))
+                                     summing problems-in-year))
          (solved-percentage (* 100.0 (/ solved-problems-count total-problems-count)))
          (format-string "Progress: ~a/~a (~$%)"))
     (format nil format-string
@@ -125,7 +141,8 @@ f: Failed test
           (eql 'controlling-result (type-of test))
           (eql :skipped (child-status test))) "-")
     ((eql :passed (status test)) (format nil "~,4fs" (duration test)))
-    ((eql :failed (status test)) "/")))
+    ((eql :failed (status test)) "FAILED")
+    (T "")))
 
 (defmethod aoc-test-duration-hist (test)
   (cond
@@ -135,7 +152,8 @@ f: Failed test
     ((eql :passed (status test))
      (format nil "~{~a~}" (make-list (floor (/ (duration test) 0.25))
                                      :initial-element #\#)))
-    ((eql :failed (status test)) "")))
+    ((eql :failed (status test)) "")
+    (T "")))
 
 (defmethod summarize ((report aoc-report-time))
   (let ((test-hierarchy (test-hierarchy report))
@@ -149,9 +167,5 @@ f: Failed test
                       (loop for part from 1
                             for problems-test across daily-tests
                             do (format stream "Part ~d: ~7a ~10a  " part
-                                       (if (solvedp problems-test)
-                                           (printable-aoc-test-duration problems-test)
-                                           0)
-                                       (if (solvedp problems-test)
-                                           (aoc-test-duration-hist problems-test)
-                                           0)))))))
+                                       (printable-aoc-test-duration problems-test)
+                                       (aoc-test-duration-hist problems-test)))))))
