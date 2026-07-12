@@ -8,6 +8,13 @@
   (uiop:read-file-lines
    (asdf:system-relative-pathname 'advent-of-code filename)))
 
+(defun read-grid (filename)
+  (let ((raw-grid (uiop:read-file-lines
+                   (asdf:system-relative-pathname 'advent-of-code filename))))
+    (make-array (list (length raw-grid) (length (first raw-grid)))
+                :element-type 'character
+                :initial-contents (loop for l in raw-grid collect (loop for c across l collect c)))))
+
 (defun read-all-the-numbers (filename)
   (mapcar #'parse-integer
           (split "\\s+" (uiop:read-file-string
@@ -93,7 +100,13 @@ as necessary to reach length LEN"
 (defun transpose (lst)
   (apply #'mapcar #'list lst))
 
-
+(defun map2d (f array)
+  (let ((dimensions (array-dimensions array)))
+    (loop for r from 0 below (first dimensions)
+          do (loop for c from 0 below (second dimensions)
+                   do (setf (aref array r c)
+                            (funcall f (aref array r c)))))
+    array))
 ;; Sequences
 
 (defclass wrapped-sequence ()
