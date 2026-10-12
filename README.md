@@ -48,8 +48,7 @@
 | Day 2 | Using a macro to simplify the implementation |
 | Day 11 | Chinese remainder theorem |
 | Day 12 | Dijkstra shortest path algorithm |
-| Day 14 | Instrumenting the solution using Common Lisp condition system and Sketch
-to create an animation |
+| Day 14 | Instrumenting the solution using Common Lisp condition system and Sketch to create an animation |
 
 #### 2023
 
