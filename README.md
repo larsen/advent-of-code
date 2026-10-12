@@ -4,18 +4,9 @@
 
 #### 2015
 
-##### Day 9
-
-Recursive shortest and longest path over a graph represented with an
-adjacency matrix.
-
-##### Day 17
-
-Recursive combinatorial enumeration.
-
-##### Day 18
-
-Game of Life.
+| Day 9 | Recursive shortest and longest path over a graph represented with an adjacency matrix |
+| Day 17 | Recursive combinatorial enumeration |
+| Day 18 | Conway's Game of Life |
 
 #### 2016
 
